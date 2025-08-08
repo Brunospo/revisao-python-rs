@@ -22,7 +22,7 @@ class TaskController:
 
     self.next_id += 1
 
-    return jsonify({"message": "Nova tarefa criada com sucesso"}), 201
+    return jsonify({"message": "Nova tarefa criada com sucesso", "id": task.id}), 201
   
   def get_all_tasks(self):
     return jsonify({"tasks": [task.to_dict() for task in self.tasks], "total_tasks": len(self.tasks)}), 200
