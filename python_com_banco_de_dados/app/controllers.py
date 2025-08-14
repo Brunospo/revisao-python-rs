@@ -2,6 +2,7 @@ from flask import request, jsonify
 from models.user import User
 from flask_login import login_user, current_user, logout_user
 from app import db
+import bcrypt
 
 class UserController:
 
@@ -14,7 +15,7 @@ class UserController:
     if username and password:
       user = User.query.filter_by(username = username).first()    
 
-      if user and user.password == password:
+      if user and bcrypt.checkpw(password.encode('utf-8'), user.password.encode('utf-8')):
         login_user(user)
         return {"message": "Autenticação realizada com sucesso"}
 
@@ -36,7 +37,9 @@ class UserController:
       if user:
         return jsonify({"message": "Usuário ja cadastrado"})
       
-      user = User(username = username, password = password)
+      hashed = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+      hashed_str = hashed.decode('utf-8')
+      user = User(username = username, password = hashed_str)
       db.session.add(user)
       db.session.commit()
       return jsonify({"message": "Usuário cadastrado com sucesso"})
