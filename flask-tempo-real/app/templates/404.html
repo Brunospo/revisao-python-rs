@@ -11,7 +11,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="../static/css/style.css" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css' )}}" />
 
     <title>Pagamento</title>
   </head>
@@ -19,7 +19,7 @@
     <main>
       <header>
         <div id="qr-code">
-          <img src="../static/template_img/404.png" alt="QR Code" />
+          <img src="{{ url_for('static', filename='template_img/404.png' )}}" alt="QR Code" />
 
         </div>
 
